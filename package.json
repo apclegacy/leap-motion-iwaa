@@ -1,0 +1,28 @@
+{
+  "name": "leap-motion-capture",
+  "version": "1.0.0",
+  "description": "",
+  "main": "capture.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/iwant12cats/leap-motion-capture.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/iwant12cats/leap-motion-capture/issues"
+  },
+  "homepage": "https://github.com/iwant12cats/leap-motion-capture#readme",
+  "dependencies": {
+    "eslint": "^5.16.0",
+    "keypress": "^0.2.1",
+    "leapjs": "^0.6.4"
+  },
+  "devDependencies": {
+    "eslint-config-airbnb-base": "^13.1.0",
+    "eslint-plugin-import": "^2.17.3"
+  }
+}
