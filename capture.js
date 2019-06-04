@@ -1,9 +1,9 @@
 /* eslint-disable no-console */
 
-const readline = require('readline');
+const Readline = require('readline');
 
 // setup key listen
-readline.emitKeypressEvents(process.stdin);
+Readline.emitKeypressEvents(process.stdin);
 process.stdin.setRawMode(true);
 
 console.log('Press Space to capture Frame');
