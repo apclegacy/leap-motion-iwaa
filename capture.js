@@ -38,10 +38,23 @@ process.stdin.on('keypress', (str, key) => {
     // only when leap is connected
     if (!Controller.connected()) return;
 
-    const [hand] = Controller.frame().hands;
+    const [Hand] = Controller.frame().hands.filter(h => h.type === 'right');
+    if (Hand == null) {
+      console.log('not right hand');
+      return;
+    }
+
+    const Thumb = Hand.thumb;
 
     console.log('hand position');
-    console.log('-------------');
-    console.log(hand.palmPosition);
+    console.log(Hand.palmPosition);
+    console.log('thumb position');
+    console.log(Thumb.dipPosition);
+    console.log('a rotation');
+    console.log(Hand.roll());
+    console.log('b rotation');
+    console.log(Hand.yaw());
+    console.log('a rotation');
+    console.log(Hand.roll());
   }
 });
