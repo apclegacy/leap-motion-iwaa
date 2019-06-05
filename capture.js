@@ -3,8 +3,6 @@
 const Readline = require('readline');
 const Leap = require('leapjs');
 
-let leapConnected = false;
-
 // setup key listen
 Readline.emitKeypressEvents(process.stdin);
 // TODO: this throws error, might be worth to change input method to redStream
@@ -27,20 +25,23 @@ Controller.on('deviceStreaming', () => {
   console.log('leap is sending data!');
   console.log('----------------------------');
   console.log('press space to capture frame data!');
-  leapConnected = true;
 });
 
 
 // setting up keypress Event
 process.stdin.on('keypress', (str, key) => {
-  // only when leap is connected
-  if (!leapConnected) return;
-
   // if ctrl + c stop else output data
   if (key.ctrl && key.name === 'c') {
     console.log('exiting...');
     process.exit();
-  } else {
-    console.log('Frame captured!');
+  } else if (key.name === 'space') {
+    // only when leap is connected
+    if (!Controller.connected()) return;
+
+    const [hand] = Controller.frame().hands;
+
+    console.log('hand position');
+    console.log('-------------');
+    console.log(hand.palmPosition);
   }
 });
