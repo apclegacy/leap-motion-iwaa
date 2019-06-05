@@ -7,7 +7,7 @@
     {
       "type": "node",
       "request": "launch",
-      "name": "Debut Capturing",
+      "name": "Debug Capturing",
       "program": "${workspaceFolder}/capture.js"
     }
   ]
