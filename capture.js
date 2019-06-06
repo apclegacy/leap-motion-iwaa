@@ -57,6 +57,7 @@ process.stdin.on('keypress', (str, key) => {
   } else if (key.name === 'w') {
     console.log('writing output...');
     jsonifyOutput();
+    process.exit();
   } else if (key.name === 'space') {
     // only when leap is connected
     if (!Controller.connected()) return;
