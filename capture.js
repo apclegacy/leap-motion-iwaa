@@ -27,6 +27,13 @@ Controller.on('deviceStreaming', () => {
   console.log('press space to capture frame data!');
 });
 
+let previousA;
+let previousB;
+let previousC;
+let previousX;
+let previousY;
+let previousZ;
+let firstIteration = true;
 
 // setting up keypress Event
 process.stdin.on('keypress', (str, key) => {
@@ -46,15 +53,54 @@ process.stdin.on('keypress', (str, key) => {
 
     const Thumb = Hand.thumb;
 
-    console.log('hand position');
-    console.log(Hand.palmPosition);
-    console.log('thumb position');
-    console.log(Thumb.dipPosition);
-    console.log('a rotation');
-    console.log(Hand.roll());
-    console.log('b rotation');
-    console.log(Hand.yaw());
-    console.log('a rotation');
-    console.log(Hand.roll());
+    const [actualX, actualY, actualZ] = Thumb.dipPosition;
+    const actualA = Hand.roll();
+    const actualB = Hand.yaw();
+    const actualC = Hand.pitch();
+
+    let deltaX;
+    let deltaY;
+    let deltaZ;
+    let deltaA;
+    let deltaB;
+    let deltaC;
+
+    if (firstIteration) {
+      deltaX = actualX;
+      deltaY = actualY;
+      deltaZ = actualZ;
+      deltaA = actualA;
+      deltaB = actualB;
+      deltaC = actualC;
+      firstIteration = false;
+    } else {
+      deltaX = previousX - actualX;
+      deltaY = previousY - actualY;
+      deltaZ = previousZ - actualZ;
+      deltaA = previousA - actualA;
+      deltaB = previousB - actualB;
+      deltaC = previousC - actualC;
+    }
+
+    console.log('--------------------');
+    console.log('thumb X delta');
+    console.log(deltaX);
+    console.log('thumb Y delta');
+    console.log(deltaY);
+    console.log('thumb Z delta');
+    console.log(deltaZ);
+    console.log('a rotation delta');
+    console.log(deltaA);
+    console.log('b rotation delta');
+    console.log(deltaB);
+    console.log('c rotation delta');
+    console.log(deltaC);
+
+    previousA = actualA;
+    previousB = actualB;
+    previousC = actualC;
+    previousX = actualX;
+    previousY = actualY;
+    previousZ = actualZ;
   }
 });
