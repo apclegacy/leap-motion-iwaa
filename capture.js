@@ -47,6 +47,7 @@ let previousC = 0;
 let previousX = 0;
 let previousY = 0;
 let previousZ = 0;
+let baseFrame = true;
 
 // setting up keypress Event
 process.stdin.on('keypress', (str, key) => {
@@ -63,6 +64,7 @@ process.stdin.on('keypress', (str, key) => {
     if (!Controller.connected()) return;
 
     const [Hand] = Controller.frame().hands.filter(h => h.type === 'right');
+
     if (Hand == null) {
       console.log('NO RIGHT HAND');
       return;
@@ -75,12 +77,12 @@ process.stdin.on('keypress', (str, key) => {
     const actualB = Hand.yaw();
     const actualC = Hand.pitch();
 
-    const deltaX = previousX - actualX;
-    const deltaY = previousY - actualY;
-    const deltaZ = previousZ - actualZ;
-    const deltaA = previousA - actualA;
-    const deltaB = previousB - actualB;
-    const deltaC = previousC - actualC;
+    const deltaX = actualX - previousX;
+    const deltaY = actualY - previousY;
+    const deltaZ = actualZ - previousZ;
+    const deltaA = actualA - previousA;
+    const deltaB = actualB - previousB;
+    const deltaC = actualC - previousC;
 
     previousX = actualX;
     previousY = actualY;
@@ -89,18 +91,19 @@ process.stdin.on('keypress', (str, key) => {
     previousB = actualB;
     previousC = actualC;
 
-    if (previousA === 0) {
+    if (baseFrame) {
       console.log('BASE FRAME');
       console.log('//////////');
+      baseFrame = false;
       return;
     }
 
-    iwaaZ = deltaX;
+    iwaaZ = deltaZ * -1;
     iwaaX = deltaY;
-    iwaaY = deltaZ;
-    iwaaB = deltaA;
+    iwaaY = deltaX;
+    iwaaA = deltaA;
+    iwaaB = deltaC;
     iwaaC = deltaB;
-    iwaaA = deltaC;
 
     console.log('NEW FRAME');
     console.log('---------');
